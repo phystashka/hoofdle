@@ -5,9 +5,28 @@
     <link rel="icon" type="image/x-icon" href="/hoofdle/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hoofdle</title>
+    <script src="https://discord.com/api/v10/embedded-app-sdk.js"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <script>
+      if (window.parent !== window) {
+        console.log("ready in Discord Activity iframe");
+      }
+
+      window.addEventListener('error', function(e) {
+        console.log('Error:', e.error);
+        return true;
+      });
+
+      window.discordSDKReady = false;
+
+      if (typeof DiscordSDK !== 'undefined') {
+        console.log('Discord SDK ready');
+        window.discordSDKReady = true;
+      }
+    </script>
   </body>
 </html>

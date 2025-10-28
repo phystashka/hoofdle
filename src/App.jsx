@@ -12,6 +12,12 @@ function App() {
   const { discordSdk, isAuthenticated } = useDiscordSDK()
   const { playKeyboard, playTable, playFail } = useSound()
   
+  // Debug logs
+  console.log('App render - isAuthenticated:', isAuthenticated)
+  console.log('App render - discordSdk:', discordSdk ? 'loaded' : 'not loaded')
+  console.log('App render - window.parent !== window:', window.parent !== window)
+  console.log('App render - current URL:', window.location.href)
+  
   const {
     currentGuess,
     guesses,
@@ -25,28 +31,7 @@ function App() {
 
   const [showModal, setShowModal] = useState(false)
 
-  useEffect(() => {
-    const disableDevTools = (e) => {
-      if (e.key === 'F12' || 
-          (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-          (e.ctrlKey && e.shiftKey && e.key === 'C') ||
-          (e.ctrlKey && e.key === 'U')) {
-        e.preventDefault()
-      }
-    }
-
-    const disableContextMenu = (e) => {
-      e.preventDefault()
-    }
-
-    document.addEventListener('keydown', disableDevTools)
-    document.addEventListener('contextmenu', disableContextMenu)
-
-    return () => {
-      document.removeEventListener('keydown', disableDevTools)
-      document.removeEventListener('contextmenu', disableContextMenu)
-    }
-  }, [])
+  // Удалили блокировку консоли для отладки Discord SDK
 
   useEffect(() => {
     if (gameStatus !== 'playing') {
@@ -83,14 +68,12 @@ function App() {
     resetGame()
   }, [resetGame])
 
-  const showGame = isAuthenticated || window.location.hostname === 'phystashka.github.io' || window.location.hostname === 'localhost'
-
-  if (!showGame) {
+  if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-blue-700">Connecting to Discord...</p>
+          <p className="text-blue-700">Loading Hoofdle...</p>
         </div>
       </div>
     )
