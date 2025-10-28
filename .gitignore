@@ -12,11 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Sensitive assets (sounds and music)
-public/audio/
-public/music/
-public/sounds/
-
 # Word dictionary (hidden for security)
 config/words.json
 
