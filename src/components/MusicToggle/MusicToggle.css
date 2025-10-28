@@ -25,3 +25,23 @@
 .music-button:active {
   color: #3b82f6;
 }
+
+/* Mobile adaptations */
+@media (max-width: 640px) {
+  .music-toggle {
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+  
+  .music-button {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-toggle {
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+}

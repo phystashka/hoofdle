@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import GameHeader from './components/GameHeader/GameHeader'
 import GameBoard from './components/GameBoard/GameBoard'
 import Keyboard from './components/Keyboard/Keyboard'
@@ -69,15 +69,19 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  const handleKeyPressWithSound = (key) => {
+  const handleKeyPressWithSound = useCallback((key) => {
     playKeyboard()
     handleKeyPress(key)
-  }
+  }, [playKeyboard, handleKeyPress])
 
-  const handleNewGame = () => {
+  const handleTileReveal = useCallback(() => {
+    playTable()
+  }, [playTable])
+
+  const handleNewGame = useCallback(() => {
     setShowModal(false)
     resetGame()
-  }
+  }, [resetGame])
 
   const showGame = isAuthenticated || window.location.hostname === 'phystashka.github.io' || window.location.hostname === 'localhost'
 
@@ -93,15 +97,15 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-lg mx-auto">
+    <div className="min-h-screen flex flex-col items-center justify-center p-3 sm:p-6">
+      <div className="w-full max-w-lg mx-auto space-y-4 sm:space-y-6">
         <GameHeader />
         <GameBoard 
           guesses={guesses}
           currentGuess={currentGuess}
           currentRow={currentRow}
           targetWord={targetWord}
-          onTileReveal={playTable}
+          onTileReveal={handleTileReveal}
         />
         <Keyboard 
           keyboardState={keyboardState}

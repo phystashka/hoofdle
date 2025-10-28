@@ -43,7 +43,7 @@ function MusicToggle() {
         onClick={toggleMusic}
         title={isPlaying ? 'Pause music' : 'Play music'}
       >
-        {isPlaying ? <IoMusicalNotes size={20} /> : <IoPlay size={20} />}
+        {isPlaying ? <IoMusicalNotes className="text-lg sm:text-xl" /> : <IoPlay className="text-lg sm:text-xl" />}
       </button>
     </div>
   )

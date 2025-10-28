@@ -18,3 +18,20 @@
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+/* Mobile adaptations */
+@media (max-width: 640px) {
+  .game-header {
+    margin-bottom: 1rem;
+  }
+  
+  .game-logo {
+    height: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-logo {
+    height: 2.5rem;
+  }
+}
