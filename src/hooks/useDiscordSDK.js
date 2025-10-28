@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { DiscordSDK } from '@discord/embedded-app-sdk'
 
 export function useDiscordSDK() {
   const [discordSdk, setDiscordSdk] = useState(null)
@@ -8,6 +7,12 @@ export function useDiscordSDK() {
   useEffect(() => {
     const initDiscord = async () => {
       try {
+        if (window.location.hostname === 'phystashka.github.io') {
+          setIsAuthenticated(false)
+          return
+        }
+
+        const { DiscordSDK } = await import('@discord/embedded-app-sdk')
         const sdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID)
         await sdk.ready()
         
