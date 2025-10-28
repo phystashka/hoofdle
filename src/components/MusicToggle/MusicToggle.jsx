@@ -8,10 +8,11 @@ function MusicToggle() {
 
   useEffect(() => {
     try {
-      audioRef.current = new Audio('./music/music.mp3')
+      audioRef.current = new Audio('/hoofdle/music/music.mp3')
       audioRef.current.loop = true
       audioRef.current.volume = 0.3
     } catch (error) {
+      // Ignore audio loading errors
     }
 
     return () => {
