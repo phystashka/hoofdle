@@ -1,0 +1,48 @@
+import { useState, useRef, useEffect } from 'react'
+import { IoMusicalNotes, IoPlay } from 'react-icons/io5'
+import './MusicToggle.css'
+
+function MusicToggle() {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef(null)
+
+  useEffect(() => {
+    audioRef.current = new Audio('/music/music.mp3')
+    audioRef.current.loop = true
+    audioRef.current.volume = 0.3
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+      }
+    }
+  }, [])
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return
+
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    } else {
+      audioRef.current.play().catch(() => {
+      })
+      setIsPlaying(true)
+    }
+  }
+
+  return (
+    <div className="music-toggle">
+      <button 
+        className="music-button" 
+        onClick={toggleMusic}
+        title={isPlaying ? 'Pause music' : 'Play music'}
+      >
+        {isPlaying ? <IoMusicalNotes size={20} /> : <IoPlay size={20} />}
+      </button>
+    </div>
+  )
+}
+
+export default MusicToggle
