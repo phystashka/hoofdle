@@ -2,13 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/hoofdle/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hoofdle</title>
-    <script type="module" crossorigin src="/hoofdle/assets/index-CY3iADp1.js"></script>
-    <link rel="stylesheet" crossorigin href="/hoofdle/assets/index-DJztNDmL.css">
+    <!-- Discord Embedded App SDK -->
+    <script src="https://discord.com/api/v10/embedded-app-sdk.js" async></script>
+    <script type="module" crossorigin src="/assets/index-BOyZZBKb.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Bj9Ee_bs.css">
   </head>
   <body>
     <div id="root"></div>
+    
+    <script>
+      console.log('Index.html script starting...')
+      
+      if (window.parent !== window) {
+        console.log("Running in Discord Activity iframe");
+      } else {
+        console.log("Running in regular web browser");
+      }
+
+      window.addEventListener('error', function(e) {
+        console.log('Global error caught:', e.error);
+        return true;
+      });
+
+      window.addEventListener('load', function() {
+        console.log('Window loaded, checking Discord SDK...')
+        if (typeof DiscordSDK !== 'undefined') {
+          console.log('Discord SDK is available globally')
+          window.discordSDKReady = true;
+        } else {
+          console.log('Discord SDK is NOT available')
+          window.discordSDKReady = false;
+        }
+      });
+      
+      if (typeof DiscordSDK !== 'undefined') {
+        console.log('Discord SDK available immediately');
+        window.discordSDKReady = true;
+      } else {
+        console.log('Discord SDK not yet loaded');
+        window.discordSDKReady = false;
+      }
+    </script>
   </body>
 </html>
