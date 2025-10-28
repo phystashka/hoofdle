@@ -79,7 +79,9 @@ function App() {
     resetGame()
   }
 
-  if (!isAuthenticated) {
+  const showGame = isAuthenticated || window.location.hostname === 'phystashka.github.io' || window.location.hostname === 'localhost'
+
+  if (!showGame) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
