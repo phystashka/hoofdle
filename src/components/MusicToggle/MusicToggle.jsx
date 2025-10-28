@@ -7,8 +7,10 @@ function MusicToggle() {
   const audioRef = useRef(null)
 
   useEffect(() => {
+    const basePath = import.meta.env.BASE_URL
+    
     try {
-      audioRef.current = new Audio('/hoofdle/music/music.mp3')
+      audioRef.current = new Audio(`${basePath}music/music.mp3`)
       audioRef.current.loop = true
       audioRef.current.volume = 0.3
     } catch (error) {

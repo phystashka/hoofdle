@@ -1,17 +1,17 @@
 import { useCallback } from 'react'
 
 export function useSound() {
+  const basePath = import.meta.env.BASE_URL
+  
   const playSound = useCallback((soundFile) => {
     try {
-      const audio = new Audio(`/hoofdle/sounds/${soundFile}`)
+      const audio = new Audio(`${basePath}sounds/${soundFile}`)
       audio.volume = 0.5
       audio.play().catch(() => {
-        // Ignore audio play errors (autoplay restrictions)
       })
     } catch (error) {
-      // Ignore audio loading errors
     }
-  }, [])
+  }, [basePath])
 
   const playKeyboard = useCallback(() => {
     playSound('keyboard.mp3')

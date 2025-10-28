@@ -2,16 +2,19 @@ import { useState, useEffect } from 'react'
 
 export function useDiscordSDK() {
   const [discordSdk, setDiscordSdk] = useState(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(true)
   const [isInDiscord, setIsInDiscord] = useState(false)
 
   useEffect(() => {
+    console.log('useDiscordSDK: Starting initialization...')
+    
     const initializeSDK = async () => {
       try {
         const inDiscord = window.parent !== window || 
                          window.location.href.includes('discord.com') ||
                          window.location.search.includes('frame_id')
         
+        console.log('useDiscordSDK: inDiscord check:', inDiscord)
         setIsInDiscord(inDiscord)
         
         if (!inDiscord) {
@@ -20,8 +23,9 @@ export function useDiscordSDK() {
           return
         }
 
+        console.log('useDiscordSDK: Checking for Discord SDK...')
         if (typeof window.DiscordSDK === 'undefined') {
-          console.log('Discord SDK not loaded')
+          console.log('Discord SDK not loaded, but continuing...')
           setIsAuthenticated(true)
           return
         }
@@ -56,9 +60,16 @@ export function useDiscordSDK() {
       }
     }
 
-    const timer = setTimeout(initializeSDK, 200)
+    console.log('useDiscordSDK: Setting timer for initialization...')
+    const timer = setTimeout(() => {
+      console.log('useDiscordSDK: Timer fired, calling initializeSDK')
+      initializeSDK()
+    }, 200)
     
-    return () => clearTimeout(timer)
+    return () => {
+      console.log('useDiscordSDK: Cleanup, clearing timer')
+      clearTimeout(timer)
+    }
   }, [])
 
   return { 
